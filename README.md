@@ -228,23 +228,18 @@ In `app.py`, change the instantiated instance to the `QuoteBot`:
 
 Run this bot and check its behavior.
 
-## Build your image processing bot - the `ImageProcessingBot` class
+## image processing bot - the `ImageProcessingBot` class
 
 In `bot.py` you are given a class called `ImageProcessingBot` which **inherits** from `Bot`, again.
 Upon incoming **photo messages**, this bot downloads the photos and processes them according to the **`caption`** field provided with the message.
 The bot will then send the processed image to the user.
 
-A few notes:
+In `app.py`, change the instantiated instance to the `ImageProcessingBot`:
 
-- Inside the `ImageProcessingBot` class, override `handle_message` method and implement the needed functionality.
-- Remember that by inheriting the `Bot` class, you can use all of its methods (such as `send_text`, `download_user_photo`, `send_photo`...). 
-- Possible `caption` values are: `['Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat']`.
-- Handle potential errors using `try... except... `. Send an appropriate message to the user (E.g. "something went wrong... please try again").
-- Set a timeout when sending a message to Telegram.
-- Use `logger` to log important information in your app.
-- Your bot should support the `Blur` and `Contour` filters (those filters have already implemented for you). 
-
-Test your bot on real photos and make sure it's functioning properly.
+```diff
+- QuoteBot(TELEGRAM_TOKEN, TELEGRAM_APP_URL)
++ ImageProcessingBot(TELEGRAM_TOKEN, TELEGRAM_APP_URL)
+```
 
 > [!TIP]
 > When working with Telegram's API, you might encounter situations where your code encounters errors while processing incoming messages. In such cases, Telegram's server will automatically retry sending messages that were not responded to with a status code of 200. This retry mechanism is designed to ensure the reliable delivery of messages.

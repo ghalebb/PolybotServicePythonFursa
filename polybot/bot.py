@@ -104,9 +104,13 @@ class ImageProcessingBot(Bot):
                             img.segment()
                         elif caption == 'salt and pepper':
                             img.salt_n_pepper()
+                        elif caption == 'rotate2':
+                            img.rotate()
+                            img.rotate()
                         else:
                             self.send_text(chat_id,
-                                           'Unknown command. Please use one of the following: Blur, Contour, Rotate, Segment, Salt and pepper, Concat')
+                                           'Unknown command. Please use one of the following: Blur, Contour, Rotate'
+                                           ', Segment, Salt and pepper, Concat')
                             return
 
                         processed_img_path = img.save_img()

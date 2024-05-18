@@ -81,3 +81,6 @@ class Img:
             for j in range(len(self.data[0])):
                 self.data[i][j] = 255 if self.data[i][j] > 100 else 0
         # self.data = [[255 if pixel > 100 else 0 for pixel in row] for row in self.data]
+
+    def flip_horizontal(self):
+        self.data = [row[::-1] for row in self.data]

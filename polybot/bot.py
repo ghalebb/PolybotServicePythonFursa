@@ -5,6 +5,16 @@ import time
 from telebot.types import InputFile
 from polybot.img_proc import Img
 
+HELP_MSG = ("You can use one of the following commands:\n"
+            "- Blur: Applies a blurring effect to the image, smoothing out details.\n"
+            "- Contour: Detects edges or boundaries of objects in the image.\n"
+            "- Rotate: Rotates the image clockwise.\n"
+            "- Segment: Divides the image into regions based on similarities.\n"
+            "- Salt and pepper: Adds random noise to individual pixels in the image.\n"
+            "- Concat: Combines two images either horizontally.\n"
+            "- Rotate2: Rotates the image two times.\n"
+            "- Flip horizontal: Flips the image horizontally, reversing the order of pixels.")
+
 
 class Bot:
 
@@ -84,6 +94,20 @@ class ImageProcessingBot(Bot):
         chat_id = msg['chat']['id']
 
         try:
+
+            if 'text' in msg and (msg['text'] == '/start' or msg['text'].lower() == 'hi'):
+                name = msg['chat']['first_name']
+                self.send_text(chat_id,
+                               f"Hello {name}! I am your image bot.\n")
+                self.send_text(chat_id, HELP_MSG)
+                return
+            if 'text' in msg and msg['text'] == '/help':
+                self.send_text(chat_id, HELP_MSG)
+                return
+            if 'text' in msg and msg['text'] == 'bye':
+                self.send_text(chat_id, "Goodbye!")
+                return
+
             if self.is_current_msg_photo(msg):
                 photo_path = self.download_user_photo(msg)
 
@@ -107,6 +131,8 @@ class ImageProcessingBot(Bot):
                         elif caption == 'rotate2':
                             img.rotate()
                             img.rotate()
+                        elif caption == 'flip horizontal':
+                            img.flip_horizontal()
                         else:
                             self.send_text(chat_id,
                                            'Unknown command. Please use one of the following: Blur, Contour, Rotate'
@@ -126,6 +152,7 @@ class ImageProcessingBot(Bot):
                 else:
                     self.send_text(chat_id, 'Please send a photo with a valid command as the caption.')
             else:
+
                 self.send_text(chat_id, 'Please send a photo with a valid command as the caption.')
         except Exception as e:
             logger.error(f"Error processing image: {e}")

@@ -1,12 +1,9 @@
 
 # The Polybot Service: Python Project [![][autotest_badge]][autotest_workflow]
 
-## Telegram Link
-To use the bot go to: https://t.me/galebb_bot
-
 ## Background
 
-In this project, you develop a Python chatbot application which applies filters to images send by users to a Telegram bot. 
+This project is a Python implementations of a chatbot application which applies filters to images send by users to a Telegram bot. 
 
 Here is a short demonstration:
 
@@ -23,45 +20,6 @@ Here is a short demonstration:
 3. Open the repo as a code project in your favorite IDE (Pycharm, VSCode, etc..).
    It is also a good practice to create an isolated Python virtual environment specifically for your project ([see here how to do it in PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)).
 
-Later on, you are required to change the `README.md` file content to provide relevant information about your service project, e.g. how to launch the app, main features, etc.
-
-Let's get started...
-
-## Intro to image processing
-
-Reference: https://ai.stanford.edu/~syyeung/cvweb/tutorial1.html
-
-### What is a digital image?
-
-
-If we take a closer look on a digital image, we will notice it comprised of individual pixels, 
-each pixel has its own value. For a grayscale image, each pixel would have an **intensity** value between 0 and 255, with 0 being black and 255 being white. 
-
-![][python_project_pixel]
-
-A grayscale image, then, can be represented as a matrix of pixel values:
-
-![][python_project_imagematrix]
-
-A color image is just a simple extension of this. The colors are constructed from a combination of Red, Green, and Blue (RGB). Instead of one matrix of pixel values, we use 3 different matrix, one for the Red (R) values, one for Green (G), and one Blue (B) values. 
-
-<img src="https://alonitac.github.io/DevOpsTheHardWay/img/python_project_colorpixels.png" width="50%">
-
-As can be seen, each pixel of the image has three channels, represent the red, green, blue values. 
-
-Python-wise, a digital grayscale image is essentially a matrix (list of lists):
-
-![][python_project_pythonimage]
-
-Each element in the `image` list is a list represented a **row** of pixels. 
-
-### Image filtering
-
-Filtered images are ubiquitous in our social media feeds, news articles, books—everywhere!
-Image filtering is a technique in image processing that involves modifying or enhancing an image by applying a filter to it.
-Filters can be used to remove noise, sharpen edges, blur or smooth the image, or highlight specific features or details, among other effects.
-
-Python-wise, image filtering is as simple as manipulate the pixel values. 
 
 ## The `Img` class
 
@@ -85,22 +43,16 @@ Here is a detailed usage instruction for the class:
    
    This will save the modified grayscale image to a new path with an appended `_filtered` suffix, and uses the same file extension.
 
-### Filters for you to implement
+### Filters in the class
 
-You are instructed to implement at least the following 4 filters: `concat()`, `rotate()`, `salt_n_pepper()`, `segment()`.
+In the project I implemented the following filters: `concat()`, `rotate()`, `salt_n_pepper()`, `segment()` and `flip_horizontal()`.
 
-On every error (E.g. image path doesn't exist, input image is not an RGB) you should raise a `RuntimeError` exception.
+On every error (E.g. image path doesn't exist, input image is not an RGB) the program raises a `RuntimeError` exception.
 
 
 #### Concatenating images
 
 The `concat()` method is meant to concatenate two images together horizontally (side by side).
-
-
-Implementation instruction for horizontal concatenation:   
-- Check the dimensions of both images to ensure they are compatible for concatenation. If the dimensions are not compatible (e.g., different heights), raise a `RuntimeError` exception with informative message.
-- Combine the pixel values of both images to create a new image. For horizontal concatenation, combine each row of the first image with the corresponding row of the second image.
-- Store the resulting concatenated image in the `self.data` attribute of the instance. 
 
 ```python
 my_img = Img('path/to/image.jpg')
@@ -109,21 +61,12 @@ my_img.concat(another_img)
 my_img.save_img()   # concatenated image was saved in 'path/to/image_filtered.jpg'
 ```
 
-Note: you can optionally use the `direction` argument to implement `vertical` concatenation as well.
+Note: The `direction` argument is set `vertical` concatenation by default.
 
 #### Adding "salt and pepper" noise to the image
 
 The `salt_n_pepper()` noise method applies a type of image distortion that randomly adds isolated pixels with value of either 255 (maximum white intensity) or 0 (minimum black intensity).
 The name "salt and pepper" reflects the appearance of these randomly scattered bright and dark pixels, resembling grains of salt and pepper sprinkled on an image.
-
-Implementation instruction:   
- 1. Iterate over the pixels of the image by looping through each row and each pixel value.
- 2. For each pixel in the image:
-     - Randomly generate a number between 0 and 1.
-     - If the random number is less than 0.2, set the pixel value to the maximum intensity (255) to represent salt.
-     - If the random number is greater than 0.8, set the pixel value to the minimum intensity (0) to represent pepper.
-     - If neither condition is met (the random number is in between 0.2 to 0.8), keep the original pixel value without any modification.
-
 
 ```python
 my_img = Img('path/to/image.jpg')
@@ -134,9 +77,6 @@ my_img.save_img()  # noisy image was saved in 'path/to/image_filtered.jpg'
 #### Rotating the image
 
 The `rotate()` method rotates an image around its center in a clockwise direction.
-    
-Implementation remarks:   
-The resulting rotated image will have its rows become the columns, and the columns will become the rows. The pixels in the rotated image will be repositioned based on a clockwise rotation around the center of the original image. For example, the first row in the original image will become the last column in the rotated image, the second row will become the second-to-last column, and so on.  
 
 ```python
 my_img = Img('path/to/image.jpg')
@@ -149,24 +89,17 @@ my_img.save_img()   # rotated image was saved in 'path/to/image_filtered.jpg'
 
 The `segment()` method partitions the image into regions where the pixels have similar attributes, so the image is represented in a more simplified manner, and so we can then identify objects and boundaries more easily.
 
-Implementation instruction:   
- 1. Iterate over the pixels of the image by looping through each row and each pixel value.
- 2. All pixels with an intensity greater than 100 are replaced with a white pixel (intensity 255) and all others are replaced with a black pixel (intensity 0). 
-
 ```python
 my_img = Img('path/to/image.jpg')
 my_img.segment() 
 my_img.save_img()
 ```
 
-### Filters for inspiration
-
-The below two filters was already implemented, you can review these functions to get some inspiration of how might a filter implementation look like. 
-
 #### Blurring the image
 
-The `blur()` method is already implemented. You can control the blurring level `blur_level` argument (default is 16).
-   It blurs the image by replacing the value of each pixel by the average of the 16 pixels around him (or any other value, controlled by the `blur_level` argument. The bigger the value, the stronger the blurring level).
+The `blur()` method blurs the image by replacing the value of each pixel by the average of the 16 pixels around him (or any other value, controlled by the `blur_level` argument. The bigger the value, the stronger the blurring level).
+You can control the blurring level `blur_level` argument (default is 16).
+
 
 ```python
 my_img = Img('path/to/image.jpg')
@@ -176,12 +109,24 @@ my_img.save_img()
 
 #### Creating a contour of the image
 
-The `contour()` method is already implemented. It applies a contour effect to the image by calculating the **differences between neighbor pixels** along each row of the image matrix.
+The `contour()` method applies a contour effect to the image by calculating the **differences between neighbor pixels** along each row of the image matrix.
 
 ```python
 my_img = Img('path/to/image.jpg')
 my_img.contour() 
 my_img.save_img()
+```
+
+#### Flipping the Image Horizontally
+
+The `flip_horizontal()` method flips the image horizontally, effectively reversing the order of pixels in each row of the image matrix. This operation mirrors the image along a vertical axis passing through its center.
+
+Here's an example of how to use the `flip_horizontal()` method:
+
+```python
+my_img = Img('path/to/image.jpg')
+my_img.flip_horizontal() 
+my_img.save_img()   # flipped image was saved in 'path/to/image_filtered.jpg'
 ```
 
 ## Test your filters locally
@@ -314,29 +259,34 @@ python -m polybot.test.test_telegram_bot
 
 Or via the Pycharm UI. 
 
+## Exporting TELEGRAM_TOKEN and TELEGRAM_APP_URL
 
-## Extend your bot functionality
+### Windows:
 
-Add any functionality you wish to your bot...
+To export environment variables in Windows, you can use the `set` command. Open Command Prompt and execute the following commands:
 
-- Greet the user.
-- Add some informative message when user sends photos without captions or with invalid caption value.
-- Add your own filters.
-- Extend the functionality of the filters, e.g. allow users to specify "Rotate 2" to rotate the image twice).
+```cmd
+set TELEGRAM_TOKEN=your_telegram_token
+set TELEGRAM_APP_URL=your_telegram_app_url
+```
 
-**Go wild!!!** 
+### Linux/ Mac:
+In Linux/Mac, you can export environment variables using the export command. Open Terminal and execute the following commands:
+
+```cmd
+export TELEGRAM_TOKEN=your_telegram_token
+export TELEGRAM_APP_URL=your_telegram_app_url
+```
+## Running the App from the Command Line
+
+To run the app from the command line, execute the following command:
 
 
-## Submission
-
-Time to submit your solution for testing.
-
-1. Commit and push your changes.
-1. In [GitHub Actions][github_actions], watch the automated test execution workflow (enable Actions if needed). 
-   If there are any failures, click on the failed job and **read the test logs carefully**. Fix your solution, commit and push again.
+```bash
+python3 polyplot.app
+```
 
 
-## Good Luck
 
 [DevOpsTheHardWay]: https://github.com/alonitac/DevOpsTheHardWay
 [autotest_badge]: ../../actions/workflows/project_auto_testing.yaml/badge.svg?event=push

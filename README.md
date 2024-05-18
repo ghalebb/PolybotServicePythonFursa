@@ -1,6 +1,9 @@
 
 # The Polybot Service: Python Project [![][autotest_badge]][autotest_workflow]
 
+## Telegram Link
+To use the bot go to: https://t.me/galebb_bot
+
 ## Background
 
 In this project, you develop a Python chatbot application which applies filters to images send by users to a Telegram bot. 

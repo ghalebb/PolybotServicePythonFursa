@@ -19,7 +19,8 @@ Here is a short demonstration:
    Change `<your-username>` and `<your-project-repo-name>` according to your GitHub username and the name you gave to your fork. E.g. `git clone https://github.com/johndoe/PolybotServicePython`.
 3. Open the repo as a code project in your favorite IDE (Pycharm, VSCode, etc..).
    It is also a good practice to create an isolated Python virtual environment specifically for your project ([see here how to do it in PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)).
-
+4. To install the requirements for the project, you can execute the following command:
+``` pip install -r requirements.txt```
 
 ## The `Img` class
 

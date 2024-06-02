@@ -35,3 +35,7 @@ jobs:
             pip install -r requirements.txt
             sudo systemctl restart bot
           EOF
+<<<<<<< HEAD
+=======
+
+>>>>>>> dde27fd07d2199523d788f8645fdb9f17ee50ee4

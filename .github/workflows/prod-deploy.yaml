@@ -33,9 +33,5 @@ jobs:
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
-            sudo systemctl restart bot
+            sudo systemctl restart prod-bot
           EOF
-<<<<<<< HEAD
-=======
-
->>>>>>> dde27fd07d2199523d788f8645fdb9f17ee50ee4

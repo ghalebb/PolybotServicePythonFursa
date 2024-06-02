@@ -1,4 +1,5 @@
 import flask
+
 from flask import request
 import os
 from polybot.bot import Bot, QuoteBot, ImageProcessingBot

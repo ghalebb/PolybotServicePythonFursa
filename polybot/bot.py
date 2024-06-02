@@ -3,7 +3,7 @@ from loguru import logger
 import os
 import time
 from telebot.types import InputFile
-from polybot.img_proc import Img
+from img_proc import Img
 
 HELP_MSG = ("You can use one of the following commands:\n"
             "- Blur: Applies a blurring effect to the image, smoothing out details.\n"
@@ -28,7 +28,7 @@ class Bot:
         time.sleep(0.5)
 
         # set the webhook URL
-        self.telegram_bot_client.set_webhook(url=f'{telegram_chat_url}/{token}/', timeout=60)
+        self.telegram_bot_client.set_webhook(url=f'{telegram_chat_url}/{token}/',certificate=open('/home/ubuntu/PolybotServicePythonFursa/polybot/bot_cert.pem', 'r'), timeout=60)
 
         logger.info(f'Telegram Bot information\n\n{self.telegram_bot_client.get_me()}')
 

@@ -99,7 +99,7 @@ class ImageProcessingBot(Bot):
             if 'text' in msg and (msg['text'] == '/start' or msg['text'].lower() == 'hi'):
                 name = msg['chat']['first_name']
                 self.send_text(chat_id,
-                               f"Hello {name}! I am your image bot.\n")
+                               f"Hi {name}! I am your image bot.\n")
                 self.send_text(chat_id, HELP_MSG)
                 return
             if 'text' in msg and msg['text'] == '/help':

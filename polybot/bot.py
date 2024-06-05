@@ -105,7 +105,7 @@ class ImageProcessingBot(Bot):
             if 'text' in msg and msg['text'] == '/help':
                 self.send_text(chat_id, HELP_MSG)
                 return
-            if 'text' in msg and msg['text'] == 'bye':
+            if 'text' in msg and msg['text'] == 'bye' or msg['text']=='end':
                 self.send_text(chat_id, "Goodbye!")
                 return
 

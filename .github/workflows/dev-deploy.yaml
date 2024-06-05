@@ -29,9 +29,9 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ env.EC2_USER }}@${{ env.EC2_HOST}} << 'EOF'
-            cd /path/to/your/project
+            cd ~/PolybotServicePythonFursa
             git pull origin dev
             source venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r polybot/requirements.txt
             sudo systemctl restart dev-bot
           EOF
